@@ -33,6 +33,7 @@ const translations: Record<Language, Record<string, string>> = {
     'lookup.payout': 'Next Payout',
     'status.active': 'Active',
     'status.review': 'Needs Review',
+    'status.needs-review': 'Needs Review',
     'type.local': 'Local',
     'type.national': 'National',
     'stats.title': 'Senior Citizen Statistics',
@@ -66,6 +67,7 @@ const translations: Record<Language, Record<string, string>> = {
     'lookup.payout': 'Sunod nga Bayad',
     'status.active': 'Aktibo',
     'status.review': 'Kinahanglan Susihon',
+    'status.needs-review': 'Kinahanglan Susihon',
     'type.local': 'Lokal',
     'type.national': 'Nasudnon',
     'stats.title': 'Estadistika sa Senior Citizen',
@@ -97,6 +99,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useLanguage() {
   const context = useContext(LanguageContext);
   if (!context) {

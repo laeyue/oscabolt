@@ -1,13 +1,13 @@
 import { HTMLAttributes, forwardRef } from 'react';
 
-interface CardProps extends HTMLAttributes<HTMLDivElement> {}
+type CardProps = HTMLAttributes<HTMLDivElement>;
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ className = '', ...props }, ref) => {
     return (
       <div
         ref={ref}
-        className={`bg-white rounded-lg shadow-md border border-gray-200 ${className}`}
+        className={`rounded-3xl border border-slate-100 bg-white shadow-floating ${className}`}
         {...props}
       />
     );

@@ -30,23 +30,23 @@ export function PensionLookupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-50 to-blue-50 py-12">
-      <div className="container mx-auto px-4">
-        <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-teal-700 mb-2">
-              {t('lookup.title')}
-            </h1>
-            <p className="text-gray-600">{t('lookup.subtitle')}</p>
+    <main className="bg-slate-50 py-16">
+      <div className="mx-auto flex max-w-5xl flex-col gap-10 px-6 lg:flex-row">
+        <section className="space-y-6 lg:w-1/2">
+          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-brand-blue">
+            {t('hero.title')}
+          </p>
+          <div>
+            <h1 className="text-4xl font-bold text-brand-dark">{t('lookup.title')}</h1>
+            <p className="mt-3 text-base text-slate-600">{t('lookup.subtitle')}</p>
           </div>
-
-          <Card>
+          <Card className="p-0">
             <CardHeader>
-              <form onSubmit={handleSearch} className="space-y-4">
+              <form onSubmit={handleSearch} className="space-y-5">
                 <div>
                   <label
                     htmlFor="oscaId"
-                    className="block text-sm font-medium text-gray-700 mb-2"
+                    className="mb-2 block text-sm font-medium text-slate-600"
                   >
                     {t('lookup.osca')}
                   </label>
@@ -63,7 +63,7 @@ export function PensionLookupPage() {
                 <div>
                   <label
                     htmlFor="birthdate"
-                    className="block text-sm font-medium text-gray-700 mb-2"
+                    className="mb-2 block text-sm font-medium text-slate-600"
                   >
                     {t('lookup.birthdate')}
                   </label>
@@ -76,8 +76,8 @@ export function PensionLookupPage() {
                   />
                 </div>
 
-                <Button type="submit" className="w-full" size="lg">
-                  <Search className="w-5 h-5 mr-2" />
+                <Button type="submit" className="w-full text-base" size="lg">
+                  <Search className="mr-2 h-5 w-5" />
                   {t('lookup.search')}
                 </Button>
               </form>
@@ -85,69 +85,69 @@ export function PensionLookupPage() {
 
             {error && (
               <CardContent>
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start">
-                  <AlertCircle className="w-5 h-5 text-red-600 mr-3 flex-shrink-0 mt-0.5" />
-                  <p className="text-red-800">{error}</p>
+                <div className="flex items-start rounded-2xl border border-red-200 bg-red-50/80 p-4">
+                  <AlertCircle className="mr-3 h-5 w-5 text-red-600" />
+                  <p className="text-sm text-red-800">{error}</p>
                 </div>
               </CardContent>
             )}
 
             {result && (
               <CardContent>
-                <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-4">
-                  <div className="flex items-center mb-4">
-                    <CheckCircle className="w-6 h-6 text-green-600 mr-2" />
+                <div className="rounded-3xl border border-green-200 bg-green-50/80 p-6">
+                  <div className="mb-4 flex items-center">
+                    <CheckCircle className="mr-2 h-6 w-6 text-green-600" />
                     <h3 className="text-xl font-semibold text-green-800">
                       {t('lookup.name')}: {result.firstName} {result.lastName}
                     </h3>
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="grid gap-5 md:grid-cols-2">
                     <div>
-                      <p className="text-sm font-medium text-gray-600">
+                      <p className="text-xs uppercase tracking-wide text-slate-500">
                         {t('lookup.barangay')}
                       </p>
-                      <p className="text-lg text-gray-800">{result.barangay}</p>
+                      <p className="text-lg font-medium text-slate-900">{result.barangay}</p>
                     </div>
 
                     <div>
-                      <p className="text-sm font-medium text-gray-600">
+                      <p className="text-xs uppercase tracking-wide text-slate-500">
                         {t('lookup.type')}
                       </p>
-                      <p className="text-lg text-gray-800">
+                      <p className="text-lg font-medium text-slate-900">
                         {t(`type.${result.pensionType.toLowerCase()}`)}
                       </p>
                     </div>
 
                     <div>
-                      <p className="text-sm font-medium text-gray-600">
+                      <p className="text-xs uppercase tracking-wide text-slate-500">
                         {t('lookup.amount')}
                       </p>
-                      <p className="text-lg font-bold text-teal-700">
+                      <p className="text-xl font-semibold text-brand-dark">
                         ₱{result.monthlyAmount.toLocaleString()}
                       </p>
                     </div>
 
                     <div>
-                      <p className="text-sm font-medium text-gray-600">
+                      <p className="text-xs uppercase tracking-wide text-slate-500">
                         {t('lookup.status')}
                       </p>
                       <span
-                        className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
+                        className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-medium ${
                           result.status === 'active'
                             ? 'bg-green-100 text-green-800'
                             : 'bg-yellow-100 text-yellow-800'
                         }`}
                       >
-                        {t(`status.${result.status === 'active' ? 'active' : 'review'}`)}
+                        {t(`status.${result.status === 'active' ? 'active' : 'needs-review'}`)}
                       </span>
                     </div>
 
                     <div className="md:col-span-2">
-                      <p className="text-sm font-medium text-gray-600">
+                      <p className="text-xs uppercase tracking-wide text-slate-500">
                         {t('lookup.payout')}
                       </p>
-                      <p className="text-lg text-gray-800">
+                      <p className="text-lg font-medium text-slate-900">
                         {new Date(result.nextPayout).toLocaleDateString('en-US', {
                           year: 'numeric',
                           month: 'long',
@@ -160,20 +160,56 @@ export function PensionLookupPage() {
               </CardContent>
             )}
           </Card>
+        </section>
 
-          <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <p className="text-sm text-blue-800">
-              <strong>
-                {language === 'en' ? 'Note:' : 'Nota:'}
-              </strong>{' '}
-              {language === 'en'
-                ? 'For assistance or to report discrepancies, please visit the OSCA office at the City Hall or call our hotline.'
-                : 'Para sa tabang o pagreport sa mga sayop, palihug bisitaha ang opisina sa OSCA sa City Hall o tawagan ang among hotline.'}
-            </p>
-          </div>
-        </div>
+        <aside className="rounded-4xl border border-slate-100 bg-white/80 p-8 shadow-floating backdrop-blur lg:w-1/2">
+          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-brand-blue">
+            {language === 'en' ? 'Need help?' : 'Nanginahanglan tabang?'}
+          </p>
+          <h2 className="mt-3 text-2xl font-semibold text-brand-dark">
+            {language === 'en' ? 'How the lookup works' : 'Giunsa ang pag-lookup'}
+          </h2>
+          <p className="mt-2 text-sm text-slate-600">
+            {language === 'en'
+              ? 'Bring your official OSCA ID. Payout information updates within 24 hours of validation.'
+              : 'Dad-a ang imong opisyal nga OSCA ID. Ang impormasyon sa payout ma-update sulod sa 24 ka oras human sa validation.'}
+          </p>
+
+          <ul className="mt-6 space-y-4 text-sm text-slate-600">
+            <li className="rounded-2xl border border-slate-100 bg-white/70 p-4">
+              <strong className="text-brand-dark">
+                {language === 'en' ? 'ID verification' : 'Pagpamatood sa ID'}
+              </strong>
+              <p>
+                {language === 'en'
+                  ? 'Ensure the ID matches the registered birthdate. Mismatched IDs are flagged for manual review.'
+                  : 'Siguroha nga nagtugma ang ID sa narehistrong petsa sa pagkatawo. Ang dili pagtugma ipadala sa manual nga review.'}
+              </p>
+            </li>
+            <li className="rounded-2xl border border-slate-100 bg-white/70 p-4">
+              <strong className="text-brand-dark">
+                {language === 'en' ? 'Validation drives' : 'Mga validation drive'}
+              </strong>
+              <p>
+                {language === 'en'
+                  ? 'Barangay outreach schedules are posted weekly. Contact OSCA for homebound validation.'
+                  : 'Ang iskedyul sa barangay outreach ipahibalo matag semana. Kontaka ang OSCA para sa balay-balay nga validation.'}
+              </p>
+            </li>
+            <li className="rounded-2xl border border-slate-100 bg-white/70 p-4">
+              <strong className="text-brand-dark">
+                {language === 'en' ? 'Discrepancies' : 'Mga kakulian'}
+              </strong>
+              <p>
+                {language === 'en'
+                  ? 'Report payout issues at the OSCA desk or via hotline. Bring recent validation slips.'
+                  : 'I-report ang mga isyu sa payout sa OSCA desk o hotline. Dad-a ang pinakabag-ong validation slip.'}
+              </p>
+            </li>
+          </ul>
+        </aside>
       </div>
-    </div>
+    </main>
   );
 }
 

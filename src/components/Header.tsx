@@ -1,77 +1,105 @@
 import { Link } from 'react-router-dom';
-import { Home, Search, BarChart3, Type, Languages } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useFontScale } from '../contexts/FontScaleContext';
-import { Button } from './ui/Button';
+
+const copyMap = {
+  en: {
+    brandName: 'OSCA Iligan',
+    brandTagline: 'Office for Senior Citizens Affairs',
+    nav: {
+      home: 'Home',
+      lookup: 'Pension Lookup',
+      stats: 'Statistics',
+    },
+    login: 'Portal Login',
+    cta: 'Get support',
+    fontLabel: 'Font size',
+    langLabel: 'Switch language',
+  },
+  ceb: {
+    brandName: 'OSCA Iligan',
+    brandTagline: 'Opisina para sa mga Senior Citizens',
+    nav: {
+      home: 'Balay',
+      lookup: 'Tan-awa ang Pension',
+      stats: 'Estadistika',
+    },
+    login: 'Sulod sa Portal',
+    cta: 'Kuhaa ang tabang',
+    fontLabel: 'Kadak-on sa letra',
+    langLabel: 'Ibalhin ang pinulongan',
+  },
+} as const;
 
 export function Header() {
-  const { language, toggleLanguage, t } = useLanguage();
+  const { language, toggleLanguage } = useLanguage();
   const { fontScale, setFontScale } = useFontScale();
+  const copy = copyMap[language];
+  const navLinks = [
+    { label: copy.nav.home, to: '/' },
+    { label: copy.nav.lookup, to: '/pension-lookup' },
+    { label: copy.nav.stats, to: '/statistics' },
+  ];
 
   return (
-    <header className="bg-teal-700 text-white shadow-lg">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between py-4">
-          <Link to="/" className="flex items-center space-x-3">
-            <div className="bg-white p-2 rounded-lg">
-              <Home className="w-6 h-6 text-teal-700" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold">{t('hero.title')}</h1>
-              <p className="text-xs text-teal-100">{t('hero.subtitle')}</p>
-            </div>
-          </Link>
-
-          <nav className="hidden md:flex items-center space-x-6">
-            <Link
-              to="/"
-              className="flex items-center space-x-2 hover:text-teal-100 transition-colors"
-            >
-              <Home className="w-5 h-5" />
-              <span>{t('nav.home')}</span>
-            </Link>
-            <Link
-              to="/pension-lookup"
-              className="flex items-center space-x-2 hover:text-teal-100 transition-colors"
-            >
-              <Search className="w-5 h-5" />
-              <span>{t('nav.lookup')}</span>
-            </Link>
-            <Link
-              to="/statistics"
-              className="flex items-center space-x-2 hover:text-teal-100 transition-colors"
-            >
-              <BarChart3 className="w-5 h-5" />
-              <span>{t('nav.statistics')}</span>
-            </Link>
-          </nav>
-
-          <div className="flex items-center space-x-3">
-            <div className="flex items-center space-x-2">
-              <Type className="w-4 h-4" />
-              <select
-                value={fontScale}
-                onChange={(e) => setFontScale(e.target.value as 'small' | 'medium' | 'large')}
-                className="bg-teal-600 text-white rounded px-2 py-1 text-sm border border-teal-500 focus:outline-none focus:ring-2 focus:ring-white"
-                aria-label={t('font.label')}
-              >
-                <option value="small">A</option>
-                <option value="medium">A+</option>
-                <option value="large">A++</option>
-              </select>
-            </div>
-
-            <Button
-              onClick={toggleLanguage}
-              variant="outline"
-              size="sm"
-              className="bg-transparent border-white text-white hover:bg-teal-600"
-              aria-label={t('lang.label')}
-            >
-              <Languages className="w-4 h-4 mr-1" />
-              {language === 'en' ? 'CEB' : 'EN'}
-            </Button>
+    <header className="sticky top-0 z-30 border-b border-slate-100 bg-white/90 backdrop-blur">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
+        <Link to="/" className="flex items-center gap-3">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-blue to-brand-indigo text-white font-semibold">
+            O
           </div>
+          <div>
+            <p className="text-base font-semibold text-brand-dark">{copy.brandName}</p>
+            <p className="text-xs text-brand-muted">{copy.brandTagline}</p>
+          </div>
+        </Link>
+
+        <nav className="hidden lg:flex items-center gap-8 text-sm font-medium text-slate-600">
+          {navLinks.map((link) => (
+            <Link
+              key={link.label}
+              to={link.to}
+              className="transition-colors hover:text-brand-dark"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-2">
+          <div className="hidden items-center gap-2 rounded-2xl border border-slate-200 px-3 py-1.5 text-xs text-slate-600 md:flex">
+            <span className="font-semibold text-slate-500">{copy.fontLabel}</span>
+            <select
+              value={fontScale}
+              onChange={(e) => setFontScale(e.target.value as 'small' | 'medium' | 'large')}
+              aria-label={copy.fontLabel}
+              className="rounded-xl border border-slate-200 bg-white px-2 py-1 text-xs font-semibold text-slate-700 focus:border-brand-blue/50 focus:outline-none"
+            >
+              <option value="small">A</option>
+              <option value="medium">A+</option>
+              <option value="large">A++</option>
+            </select>
+          </div>
+          <button
+            type="button"
+            onClick={toggleLanguage}
+            aria-label={copy.langLabel}
+            className="hidden items-center rounded-2xl border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:border-brand-blue hover:text-brand-blue md:inline-flex"
+          >
+            {language === 'en' ? 'CEB' : 'EN'}
+          </button>
+          <button
+            type="button"
+            className="hidden text-sm font-semibold text-slate-600 hover:text-brand-dark sm:inline-flex"
+          >
+            {copy.login}
+          </button>
+          <Link
+            to="/pension-lookup"
+            className="inline-flex items-center rounded-2xl bg-brand-blue px-5 py-2 text-sm font-semibold text-white shadow-glow transition hover:bg-blue-600"
+          >
+            {copy.cta}
+          </Link>
         </div>
       </div>
     </header>
